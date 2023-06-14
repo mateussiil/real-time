@@ -15,3 +15,5 @@ services:
       MYSQL_ROOT_DATABASE: root
       MYSQL_DATABASE: nest
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3307:3306
