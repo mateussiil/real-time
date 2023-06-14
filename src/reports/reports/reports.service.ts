@@ -30,5 +30,30 @@ export class ReportsService {
     });
   }
 
-  produce(){}
+  async produce(id: number) {
+    await sleep(3000);
+    // The job that will run for the bull
+    this.prismaService.report.update({
+      where: {
+        id,
+      },
+      data: {
+        status: Status.PROCESSING,
+      },
+    });
+
+    const randomStatus = Math.random() > 0.5 ? Status.DONE : Status.ERROR;
+
+    this.prismaService.report.update({
+      where: {
+        id,
+      },
+      data: {
+        filename: randomStatus === Status.DONE ? `report-${id}.pdf` : null,
+        status: randomStatus,
+      },
+    });
+  }
 }
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
