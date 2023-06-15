@@ -7,9 +7,9 @@ import { ReportsService } from '../reports/reports.service';
 export class ReportsJobService {
   constructor(private reportsService: ReportsService) {}
 
-  produce(job: Job<{ reportId: number }>) {
+  async produce(job: Job<{ reportId: number }>) {
     // add the report that will be executed by the job
-    this.reportsService.produce(job.data.reportId);
+    await this.reportsService.produce(job.data.reportId);
 
     return {};
   }
