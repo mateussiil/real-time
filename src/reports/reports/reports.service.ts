@@ -36,7 +36,7 @@ export class ReportsService {
     });
 
     // Add the to the queue 'reports', and the values { reportId: report.id })
-    this.reportsQueue.add('reports', { reportId: report.id });
+    await this.reportsQueue.add({ reportId: report.id });
 
     return report;
   }
@@ -44,7 +44,7 @@ export class ReportsService {
   async produce(id: number) {
     await sleep(3000);
     // The job that will run by the bull
-    this.prismaService.report.update({
+    await this.prismaService.report.update({
       where: {
         id,
       },
@@ -52,10 +52,12 @@ export class ReportsService {
         status: Status.PROCESSING,
       },
     });
+    
+    await sleep(3000);
 
     const randomStatus = Math.random() > 0.5 ? Status.DONE : Status.ERROR;
 
-    this.prismaService.report.update({
+    await this.prismaService.report.update({
       where: {
         id,
       },

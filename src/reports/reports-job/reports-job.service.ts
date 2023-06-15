@@ -1,4 +1,4 @@
-import { Processor } from '@nestjs/bull';
+import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
 import { ReportsService } from '../reports/reports.service';
 
@@ -7,6 +7,7 @@ import { ReportsService } from '../reports/reports.service';
 export class ReportsJobService {
   constructor(private reportsService: ReportsService) {}
 
+  @Process()
   async produce(job: Job<{ reportId: number }>) {
     // add the report that will be executed by the job
     await this.reportsService.produce(job.data.reportId);
