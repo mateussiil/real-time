@@ -45,6 +45,7 @@ export class ReportsController {
         }),
         tap((report) => {
           if (report.status === Status.DONE || report.status === Status.ERROR) {
+            //@Ao verificar que é esse status ele envia uma mensagem e fecha a conexao
             setTimeout(() => {
               response.end();
             }, 1000);
