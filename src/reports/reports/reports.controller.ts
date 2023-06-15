@@ -16,6 +16,13 @@ import { Response } from 'express';
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
+  @Get('view')
+  async view() {
+    const reports = await this.reportsService.all();
+
+    return { reports };
+  }
+
   @Get()
   all() {
     return this.reportsService.all();
