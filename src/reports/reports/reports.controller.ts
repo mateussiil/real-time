@@ -6,6 +6,7 @@ import {
   Post,
   Sse,
   Res,
+  Render,
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { Status } from '@prisma/client';
@@ -17,6 +18,7 @@ export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Get('view')
+  @Render('reports')
   async view() {
     const reports = await this.reportsService.all();
 
